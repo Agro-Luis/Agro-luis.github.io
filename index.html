@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AgroLuis — Semillas certificadas, fertilizantes y herramientas agronómicas. Compra fácil por WhatsApp." />
+  <title>AgroLuis — Tu tienda agrícola</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ===================== NAVBAR ===================== -->
+<nav id="mainNav">
+  <div class="logo-txt" onclick="goPage('home')">🌿 Agro<span>Luis</span></div>
+  <div class="nav-links" id="navLinks">
+    <button class="nav-btn act" onclick="goPage('home');closeMenu()">🏠 Inicio</button>
+    <button class="nav-btn"     onclick="goPage('tienda');closeMenu()">🌱 Tienda</button>
+    <button class="nav-btn"     onclick="goPage('blog');closeMenu()">📚 Agronomía</button>
+    <button class="nav-btn"     onclick="goPage('cart');closeMenu()">
+      🛒 Carrito <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+    <button class="nav-btn" id="authBtn" onclick="goPage('login');closeMenu()">Ingresar</button>
+    <button class="nav-btn cta" id="logoutBtn" onclick="doLogout()" style="display:none">Salir</button>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ===================== HOME ===================== -->
+<div class="page act" id="page-home">
+  <div class="hero">
+    <h1>Semillas de calidad,<br>cosechas exitosas</h1>
+    <p>AgroLuis — semillas certificadas, fertilizantes y herramientas para maximizar tu producción. Atención directa y personalizada.</p>
+    <div class="hero-btns">
+      <a class="wa-hero-btn"
+         href="https://wa.me/51900678263?text=¡Hola%20AgroLuis!%20🌱%20Quiero%20ver%20el%20catálogo%20y%20hacer%20un%20pedido."
+         target="_blank" rel="noopener">
+        <span class="wa-hero-icon">📲</span>
+        Comprar por WhatsApp
+      </a>
+      <button class="btn-outline" onclick="goPage('tienda')">Ver catálogo</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-num">+500</div><div class="stat-lbl">Variedades de semillas</div></div>
+    <div class="stat"><div class="stat-num">12K+</div><div class="stat-lbl">Agricultores confían</div></div>
+    <div class="stat"><div class="stat-num">95%</div><div class="stat-lbl">Tasa de germinación</div></div>
+  </div>
+
+  <div class="sec">
+    <h2 class="sec-title">Categorías</h2>
+    <p class="sec-sub">Todo para tu campo en un solo lugar</p>
+    <div class="cat-grid">
+      <div class="cat-card" onclick="filterCat('Semillas')">     <div class="cat-icon">🌱</div><div class="cat-name">Semillas híbridas</div></div>
+      <div class="cat-card" onclick="filterCat('Fertilizantes')"><div class="cat-icon">🧪</div><div class="cat-name">Bioestimulantes</div></div>
+      <div class="cat-card" onclick="filterCat('Pesticidas')">   <div class="cat-icon">🛡️</div><div class="cat-name">Insecticidas</div></div>
+      <div class="cat-card" onclick="filterCat('Pesticidas')">   <div class="cat-icon">🌿</div><div class="cat-name">Fungicidas</div></div>
+    </div>
+  </div>
+
+  <div class="sec" style="background:#fff;border-radius:var(--radius-lg);margin-top:-1rem">
+    <h2 class="sec-title">Productos destacados</h2>
+    <p class="sec-sub">Los más vendidos de la temporada</p>
+    <div class="prod-grid" id="featProds"></div>
+  </div>
+
+  <div class="sec">
+    <div class="wa-banner">
+      <span class="wa-banner-icon">📲</span>
+      <h3>¿Listo para hacer tu pedido?</h3>
+      <p>Contáctanos directamente por WhatsApp. Te atendemos en minutos, confirmamos disponibilidad y coordinamos la entrega a tu puerta.</p>
+      <p style="margin-bottom:1.25rem">Número directo: <span class="wa-num">900 678 263</span></p>
+      <a class="wa-banner-btn"
+         href="https://wa.me/51900678263?text=¡Hola%20AgroLuis!%20🌱%20Quiero%20hacer%20un%20pedido."
+         target="_blank" rel="noopener">
+        📲 Escribir ahora por WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TIENDA ===================== -->
+<div class="page" id="page-tienda">
+  <div class="sec">
+    <h2 class="sec-title">Catálogo completo</h2>
+    <p class="sec-sub">Haz clic en "📲 Comprar" para escribirnos por WhatsApp con el producto que quieres</p>
+    <div class="ph">
+      <div class="search-bar">
+        <input type="text" id="sInput" placeholder="Buscar productos..." oninput="renderAll()">
+        <button onclick="renderAll()">🔍</button>
+      </div>
+    </div>
+    <div class="ftabs" id="ftabs">
+      <span class="ftab act" onclick="setFilter('Todos',this)">Todos</span>
+      <span class="ftab"     onclick="setFilter('Semillas',this)">🌱 Semillas</span>
+      <span class="ftab"     onclick="setFilter('Fertilizantes',this)">🧪 Bioestimulantes</span>
+      <span class="ftab"     onclick="setFilter('Pesticidas',this)">🛡️ Fitosanitarios</span>
+    </div>
+    <div class="prod-grid" id="allProds"></div>
+    <div class="wa-banner" style="margin-top:2rem">
+      <span class="wa-banner-icon">🤝</span>
+      <h3>¿No encontraste lo que buscas?</h3>
+      <p>Tenemos muchas más variedades disponibles. Cuéntanos qué necesitas y te asesoramos sin costo.</p>
+      <a class="wa-banner-btn"
+         href="https://wa.me/51900678263?text=Hola%20AgroLuis,%20busco%20un%20producto%20que%20no%20encuentro%20en%20la%20página."
+         target="_blank" rel="noopener">
+        📲 Consultar por WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== BLOG ===================== -->
+<div class="page" id="page-blog">
+  <div class="sec">
+    <h2 class="sec-title">Centro de conocimiento agronómico</h2>
+    <p class="sec-sub">Guías, técnicas y consejos para mejorar tu producción</p>
+    <div class="blog-grid" id="blogGrid"></div>
+    <div class="wa-banner" style="margin-top:2rem">
+      <span class="wa-banner-icon">🌱</span>
+      <h3>¿Necesitas asesoría personalizada?</h3>
+      <p>Nuestro equipo de técnicos agrónomos puede ayudarte con tu cultivo específico. Consulta gratis por WhatsApp.</p>
+      <a class="wa-banner-btn"
+         href="https://wa.me/51900678263?text=Hola%20AgroLuis,%20necesito%20asesoría%20agronómica%20para%20mi%20cultivo."
+         target="_blank" rel="noopener">
+        📲 Pedir asesoría gratis
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CARRITO ===================== -->
+<div class="page" id="page-cart">
+  <div class="sec" style="max-width:600px">
+    <h2 class="sec-title">🛒 Tu carrito de referencia</h2>
+    <p class="sec-sub" style="margin-bottom:1rem">
+      Aquí puedes armar tu lista. Cuando estés listo, presiona <strong>"Comprar por WhatsApp"</strong> y te atendemos al instante.
+    </p>
+    <div id="cartItems"></div>
+    <div id="cartSummary"></div>
+  </div>
+</div>
+
+<!-- ===================== LOGIN ===================== -->
+<div class="page" id="page-login">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2 class="auth-title">Bienvenido</h2>
+      <p class="auth-sub">Ingresa a tu cuenta AgroLuis</p>
+      <div id="loginAlert"></div>
+      <div class="fg"><label>Correo electrónico</label>
+        <input type="email" id="lEmail" placeholder="tu@correo.com">
+      </div>
+      <div class="fg"><label>Contraseña</label>
+        <input type="password" id="lPass" placeholder="••••••••"
+               onkeydown="if(event.key==='Enter') doLogin()">
+      </div>
+      <button class="btn-full" onclick="doLogin()">Ingresar</button>
+      <p class="auth-sw">¿No tienes cuenta? <a onclick="goPage('registro')">Regístrate aquí</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== REGISTRO ===================== -->
+<div class="page" id="page-registro">
+  <div class="auth-wrap" style="max-width:480px">
+    <div class="auth-card">
+      <h2 class="auth-title">Crear cuenta</h2>
+      <p class="auth-sub">Únete a la comunidad AgroLuis</p>
+      <div id="regAlert"></div>
+      <div class="fg-row">
+        <div class="fg"><label>Nombre</label><input type="text" id="rNom" placeholder="Luis"></div>
+        <div class="fg"><label>Apellido</label><input type="text" id="rApe" placeholder="García"></div>
+      </div>
+      <div class="fg"><label>Correo electrónico</label>
+        <input type="email" id="rEmail" placeholder="tu@correo.com">
+      </div>
+      <div class="fg"><label>Teléfono</label>
+        <input type="tel" id="rTel" placeholder="+51 900 678 263">
+      </div>
+      <div class="fg"><label>Tipo de usuario</label>
+        <select id="rTipo">
+          <option value="agricultor">Agricultor / Productor</option>
+          <option value="distribuidor">Distribuidor</option>
+          <option value="tecnico">Técnico agronómico</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+      <div class="fg-row">
+        <div class="fg"><label>Contraseña</label><input type="password" id="rPass" placeholder="••••••••"></div>
+        <div class="fg"><label>Confirmar</label><input type="password" id="rPass2" placeholder="••••••••"></div>
+      </div>
+      <button class="btn-full" onclick="doRegister()">Crear cuenta</button>
+      <p class="auth-sw">¿Ya tienes cuenta? <a onclick="goPage('login')">Inicia sesión</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ADMIN (oculto, sin enlaces públicos) ===================== -->
+<div class="page" id="page-admin">
+  <div class="admin-mob-tabs">
+    <div class="admin-tab act" onclick="showAdmin('dashboard',this)">📊 Dashboard</div>
+    <div class="admin-tab"    onclick="showAdmin('productos',this)">🌱 Productos</div>
+    <div class="admin-tab"    onclick="showAdmin('pedidos',this)">📦 Pedidos</div>
+    <div class="admin-tab"    onclick="showAdmin('usuarios',this)">👥 Usuarios</div>
+    <div class="admin-tab"    onclick="showAdmin('inventario',this)">📋 Stock</div>
+  </div>
+  <div class="admin-wrap">
+    <div class="admin-sidebar">
+      <div class="aside-head">Panel Admin<br><span class="aside-sub" id="adminUser">Administrador</span></div>
+      <div class="ami act" onclick="showAdmin('dashboard',this)">📊 Dashboard</div>
+      <div class="ami"     onclick="showAdmin('productos',this)">🌱 Productos</div>
+      <div class="ami"     onclick="showAdmin('pedidos',this)">📦 Pedidos</div>
+      <div class="ami"     onclick="showAdmin('usuarios',this)">👥 Usuarios</div>
+      <div class="ami"     onclick="showAdmin('inventario',this)">📋 Inventario</div>
+    </div>
+    <div class="admin-main" id="adminMain"></div>
+  </div>
+</div>
+
+<!-- ===================== MODAL ===================== -->
+<div class="modal-bg" id="modalBg" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()" id="modalBody"></div>
+</div>
+
+<!-- ===================== TOAST ===================== -->
+<div class="toast" id="toast"></div>
+
+<!-- ===================== BOTÓN FLOTANTE WHATSAPP ===================== -->
+<div class="wa-float">
+  <div class="wa-float-label">📲 Compra por WhatsApp</div>
+  <a class="wa-float-btn"
+     href="https://wa.me/51900678263?text=¡Hola%20AgroLuis!%20🌱%20Quiero%20hacer%20un%20pedido."
+     target="_blank" rel="noopener"
+     aria-label="Contactar por WhatsApp">📲</a>
+</div>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <p>© 2025 <strong>AgroLuis</strong> — Sembrando el futuro 🌱</p>
+  <p style="margin-top:.5rem">
+    <a class="footer-wa"
+       href="https://wa.me/51900678263?text=Hola%20AgroLuis,%20necesito%20ayuda."
+       target="_blank" rel="noopener">
+      📲 WhatsApp: 900 678 263
+    </a>
+  </p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
