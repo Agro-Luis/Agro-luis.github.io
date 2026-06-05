@@ -1,7 +1,4 @@
-/* =============================================
-   AGROLUIS — app.js
-   Lógica principal de la tienda
-   ============================================= */
+
 
 "use strict";
 
@@ -291,7 +288,7 @@ function buildCartMsg() {
 
 /** Mensaje para consulta de un producto individual */
 function buildProductMsg(p) {
-  return `¡Hola AgroLuis! 🌱 Estoy interesado/a en:\n\n${p.icon} *${p.name}*\nPrecio: S/ ${p.price.toFixed(2)}\n\n¿Tienen disponibilidad? ¿Cómo puedo comprarlo?`;
+  return `¡Hola AgroLuis! 🌱 Estoy interesado/a en:\n\n${p.icon} *${p.name}*\n\n¿Tienen disponibilidad y cuál es el precio? ¿Cómo puedo comprarlo?`;
 }
 
 /* =============================================
@@ -312,9 +309,9 @@ function prodCard(p) {
       <div class="prod-name">${p.name}</div>
       <div class="prod-desc">${p.desc}</div>
       <div class="prod-foot">
-        <span class="prod-price">S/ ${p.price.toFixed(2)}</span>
-        <a class="wa-buy-btn" href="${waLink(msgProd)}" target="_blank" rel="noopener">
-          📲 Comprar
+        <a class="wa-buy-btn" href="${waLink(msgProd)}" target="_blank" rel="noopener"
+           style="width:100%;justify-content:center;">
+          📲 Consultar precio
         </a>
       </div>
     </div>
@@ -390,7 +387,6 @@ function renderCart() {
       <div class="cart-ico">${i.icon}</div>
       <div class="cart-info">
         <div class="cart-iname">${i.name}</div>
-        <div class="cart-iprice">S/ ${i.price.toFixed(2)} c/u</div>
       </div>
       <div class="cart-qty">
         <button class="qty-btn" onclick="updQty(${i.id}, -1)">−</button>
@@ -718,4 +714,5 @@ function toast(msg) {
 document.addEventListener("DOMContentLoaded", () => {
   updateNav();
   renderFeat();
+});rFeat();
 });
